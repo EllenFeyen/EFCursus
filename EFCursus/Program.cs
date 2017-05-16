@@ -24,6 +24,58 @@ namespace EFCursus
                 }
             }
 
+            using (var entities = new OpleidingenEntities())
+            {
+                var query = from cursist in entities.Cursisten.Include("Mentor")
+                            where cursist.Mentor != null
+                            orderby cursist.Voornaam, cursist.Familienaam
+                            select cursist;
+                foreach (var cursist in query)
+                {
+                    var mentor = cursist.Mentor;
+                    Console.WriteLine("{0} {1}: {2} {3}", 
+                        cursist.Voornaam, cursist.Familienaam, mentor.Voornaam, mentor.Familienaam);
+                }
+            }
+
+            using (var entities = new OpleidingenEntities())
+            {
+                var query = from mentor in entities.Cursisten.Include("Beschermelingen")
+                            where mentor.Beschermelingen.Count != 0
+                            orderby mentor.Voornaam, mentor.Familienaam
+                            select mentor;
+                foreach (var mentor in query)
+                {
+                    Console.WriteLine("{0} {1}", mentor.Voornaam, mentor.Familienaam);
+                    foreach (var beschermeling in mentor.Beschermelingen)
+                    {
+                        Console.WriteLine("\t{0} {1}", beschermeling.Voornaam, beschermeling.Familienaam);
+                    }
+                }
+            }
+
+            using (var entities = new OpleidingenEntities())
+            {
+                var cursist5 = entities.Cursisten.Find(5);
+                if (cursist5!=null)
+                {
+                    var cursist6 = entities.Cursisten.Find(6);
+                    if (cursist6!=null)
+                    {
+                        cursist5.Beschermelingen.Add(cursist6);
+                        entities.SaveChanges();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Cursist 6 niet gevonden");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Cursist 5 niet gevonden");
+                }
+            }
+
 
             Console.WriteLine("Druk enter om af te sluiten");
             Console.Read();
