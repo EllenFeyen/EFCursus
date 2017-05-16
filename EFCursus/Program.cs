@@ -12,70 +12,107 @@ namespace EFCursus
     {
         static void Main(string[] args)
         {
+            //TPC
             using (var entities = new OpleidingenEntities())
             {
-                var query = from cursist in entities.Cursisten
-                            where cursist.Mentor == null
-                            orderby cursist.Voornaam, cursist.Familienaam
-                            select cursist;
-                foreach (var cursist in query)
+                var query = from cursus in entities.Cursussen
+                            orderby cursus.Naam
+                            select cursus;
+                foreach (var cursus in query)
                 {
-                    Console.WriteLine("{0} {1}", cursist.Voornaam, cursist.Familienaam);
+                    Console.WriteLine(cursus.Naam);
                 }
             }
 
             using (var entities = new OpleidingenEntities())
             {
-                var query = from cursist in entities.Cursisten.Include("Mentor")
-                            where cursist.Mentor != null
-                            orderby cursist.Voornaam, cursist.Familienaam
-                            select cursist;
-                foreach (var cursist in query)
+                var query = from cursus in entities.Cursussen
+                            where cursus is KlassikaleCursus
+                            orderby cursus.Naam
+                            select cursus;
+                foreach (var cursus in query)
                 {
-                    var mentor = cursist.Mentor;
-                    Console.WriteLine("{0} {1}: {2} {3}", 
-                        cursist.Voornaam, cursist.Familienaam, mentor.Voornaam, mentor.Familienaam);
+                    Console.WriteLine(cursus.Naam);
                 }
             }
 
             using (var entities = new OpleidingenEntities())
             {
-                var query = from mentor in entities.Cursisten.Include("Beschermelingen")
-                            where mentor.Beschermelingen.Count != 0
-                            orderby mentor.Voornaam, mentor.Familienaam
-                            select mentor;
-                foreach (var mentor in query)
+                entities.Cursussen.Add(new ZelfstudieCursus
                 {
-                    Console.WriteLine("{0} {1}", mentor.Voornaam, mentor.Familienaam);
-                    foreach (var beschermeling in mentor.Beschermelingen)
-                    {
-                        Console.WriteLine("\t{0} {1}", beschermeling.Voornaam, beschermeling.Familienaam);
-                    }
+                    Naam = "Spaanse correspondentie",
+                    Duurtijd = 6
+                });
+                entities.SaveChanges();
+            }
+
+            //TPH
+            using (var entities = new OpleidingenEntities())
+            {
+                var query = from cursus in entities.Cursussen
+                            orderby cursus.Naam
+                            select cursus;
+                foreach (var cursus in query)
+                {
+                    Console.WriteLine("{0}: {1}", cursus.Naam, cursus.GetType().Name);
                 }
             }
 
             using (var entities = new OpleidingenEntities())
             {
-                var cursist5 = entities.Cursisten.Find(5);
-                if (cursist5!=null)
+                var query = from cursus in entities.Cursussen
+                            where cursus is ZelfstudieCursus
+                            orderby cursus.Naam
+                            select cursus;
+                foreach (var cursus in query)
                 {
-                    var cursist6 = entities.Cursisten.Find(6);
-                    if (cursist6!=null)
-                    {
-                        cursist5.Beschermelingen.Add(cursist6);
-                        entities.SaveChanges();
-                    }
-                    else
-                    {
-                        Console.WriteLine("Cursist 6 niet gevonden");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Cursist 5 niet gevonden");
+                    Console.WriteLine(cursus.Naam);
                 }
             }
 
+            using(var entities = new OpleidingenEntities())
+            {
+                entities.Cursussen.Add(new ZelfstudieCursus
+                {
+                    Naam = "Duitse correspondentie",
+                    Duurtijd = 6
+                });
+                entities.SaveChanges();
+            }
+
+            //TPT
+            using (var entities = new OpleidingenEntities())
+            {
+                var query = from cursus in entities.Cursussen
+                            orderby cursus.Naam
+                            select cursus;
+                foreach (var cursus in query)
+                {
+                    Console.WriteLine("{0}: {1}", cursus.Naam, cursus.GetType().Name);
+                }
+            }
+
+            using (var entities = new OpleidingenEntities())
+            {
+                var query = from cursus in entities.Cursussen
+                            where !(cursus is ZelfstudieCursus)
+                            orderby cursus.Naam
+                            select cursus;
+                foreach (var cursus in query)
+                {
+                    Console.WriteLine(cursus.Naam);
+                }
+            }
+
+            using (var entities = new OpleidingenEntities())
+            {
+                entities.Cursussen.Add(new ZelfstudieCursus
+                {
+                    Naam = "Italiaanse correspondentie",
+                    Duurtijd = 6
+                });
+                entities.SaveChanges();
+            }
 
             Console.WriteLine("Druk enter om af te sluiten");
             Console.Read();

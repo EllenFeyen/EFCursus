@@ -12,9 +12,8 @@ namespace EFCursus
     using System;
     using System.Collections.Generic;
     
-    public abstract partial class Cursus
+    public partial class ZelfstudieCursus : Cursus
     {
-        public int CursusNr { get; set; }
-        public string Naam { get; set; }
+        public int Duurtijd { get; set; }
     }
 }

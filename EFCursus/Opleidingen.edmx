@@ -5,23 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="OpleidingenModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Boeken2">
-          <Key>
-            <PropertyRef Name="BoekNr" />
-          </Key>
-          <Property Name="BoekNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ISBNNr" Type="nvarchar" MaxLength="17" Nullable="false" />
-          <Property Name="Titel" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="BoekenCursussen2">
-          <Key>
-            <PropertyRef Name="BoekNr" />
-            <PropertyRef Name="CursusNr" />
-          </Key>
-          <Property Name="BoekNr" Type="int" Nullable="false" />
-          <Property Name="CursusNr" Type="int" Nullable="false" />
-          <Property Name="VolgNr" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="Campussen">
           <Key>
             <PropertyRef Name="CampusNr" />
@@ -42,12 +25,12 @@
           <Property Name="Familienaam" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="MentorNr" Type="int" />
         </EntityType>
-        <EntityType Name="Cursussen2">
+        <EntityType Name="Cursussen4">
           <Key>
             <PropertyRef Name="CursusNr" />
           </Key>
           <Property Name="CursusNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Naam" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Naam" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Docenten">
           <Key>
@@ -58,6 +41,14 @@
           <Property Name="Familienaam" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Wedde" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="CampusNr" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KlassikaleCursussen4">
+          <Key>
+            <PropertyRef Name="CursusNr" />
+          </Key>
+          <Property Name="CursusNr" Type="int" Nullable="false" />
+          <Property Name="Van" Type="datetime" Nullable="false" />
+          <Property Name="Tot" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Voorraden">
           <Key>
@@ -70,30 +61,13 @@
           <Property Name="RekNr" Type="int" Nullable="false" />
           <Property Name="Aangepast" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
-        <Association Name="FK__BoekenCur__BoekN__44FF419A">
-          <End Role="Boeken2" Type="Self.Boeken2" Multiplicity="1" />
-          <End Role="BoekenCursussen2" Type="Self.BoekenCursussen2" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Boeken2">
-              <PropertyRef Name="BoekNr" />
-            </Principal>
-            <Dependent Role="BoekenCursussen2">
-              <PropertyRef Name="BoekNr" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__BoekenCur__Cursu__45F365D3">
-          <End Role="Cursussen2" Type="Self.Cursussen2" Multiplicity="1" />
-          <End Role="BoekenCursussen2" Type="Self.BoekenCursussen2" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Cursussen2">
-              <PropertyRef Name="CursusNr" />
-            </Principal>
-            <Dependent Role="BoekenCursussen2">
-              <PropertyRef Name="CursusNr" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="ZelfstudieCursussen4">
+          <Key>
+            <PropertyRef Name="CursusNr" />
+          </Key>
+          <Property Name="CursusNr" Type="int" Nullable="false" />
+          <Property Name="Duurtijd" Type="int" Nullable="false" />
+        </EntityType>
         <Association Name="FK__Cursisten__Mento__49C3F6B7">
           <End Role="Cursisten" Type="Self.Cursisten" Multiplicity="0..1" />
           <End Role="Cursisten1" Type="Self.Cursisten" Multiplicity="*" />
@@ -118,22 +92,38 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Klassikal__Cursu__6477ECF3">
+          <End Role="Cursussen4" Type="Self.Cursussen4" Multiplicity="1" />
+          <End Role="KlassikaleCursussen4" Type="Self.KlassikaleCursussen4" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Cursussen4">
+              <PropertyRef Name="CursusNr" />
+            </Principal>
+            <Dependent Role="KlassikaleCursussen4">
+              <PropertyRef Name="CursusNr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Zelfstudi__Cursu__6754599E">
+          <End Role="Cursussen4" Type="Self.Cursussen4" Multiplicity="1" />
+          <End Role="ZelfstudieCursussen4" Type="Self.ZelfstudieCursussen4" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Cursussen4">
+              <PropertyRef Name="CursusNr" />
+            </Principal>
+            <Dependent Role="ZelfstudieCursussen4">
+              <PropertyRef Name="CursusNr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="OpleidingenModelStoreContainer">
-          <EntitySet Name="Boeken2" EntityType="Self.Boeken2" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="BoekenCursussen2" EntityType="Self.BoekenCursussen2" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Campussen" EntityType="Self.Campussen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cursisten" EntityType="Self.Cursisten" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Cursussen2" EntityType="Self.Cursussen2" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cursussen4" EntityType="Self.Cursussen4" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Docenten" EntityType="Self.Docenten" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KlassikaleCursussen4" EntityType="Self.KlassikaleCursussen4" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Voorraden" EntityType="Self.Voorraden" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__BoekenCur__BoekN__44FF419A" Association="Self.FK__BoekenCur__BoekN__44FF419A">
-            <End Role="Boeken2" EntitySet="Boeken2" />
-            <End Role="BoekenCursussen2" EntitySet="BoekenCursussen2" />
-          </AssociationSet>
-          <AssociationSet Name="FK__BoekenCur__Cursu__45F365D3" Association="Self.FK__BoekenCur__Cursu__45F365D3">
-            <End Role="Cursussen2" EntitySet="Cursussen2" />
-            <End Role="BoekenCursussen2" EntitySet="BoekenCursussen2" />
-          </AssociationSet>
+          <EntitySet Name="ZelfstudieCursussen4" EntityType="Self.ZelfstudieCursussen4" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Cursisten__Mento__49C3F6B7" Association="Self.FK__Cursisten__Mento__49C3F6B7">
             <End Role="Cursisten" EntitySet="Cursisten" />
             <End Role="Cursisten1" EntitySet="Cursisten" />
@@ -141,6 +131,14 @@
           <AssociationSet Name="FK__Docenten__Campus__25869641" Association="Self.FK__Docenten__Campus__25869641">
             <End Role="Campussen" EntitySet="Campussen" />
             <End Role="Docenten" EntitySet="Docenten" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Klassikal__Cursu__6477ECF3" Association="Self.FK__Klassikal__Cursu__6477ECF3">
+            <End Role="Cursussen4" EntitySet="Cursussen4" />
+            <End Role="KlassikaleCursussen4" EntitySet="KlassikaleCursussen4" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Zelfstudi__Cursu__6754599E" Association="Self.FK__Zelfstudi__Cursu__6754599E">
+            <End Role="Cursussen4" EntitySet="Cursussen4" />
+            <End Role="ZelfstudieCursussen4" EntitySet="ZelfstudieCursussen4" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -190,23 +188,13 @@
             <End Role="Docenten" EntitySet="Docenten" />
           </AssociationSet>
           <EntitySet Name="Voorraden" EntityType="OpleidingenModel.Voorraad" />
-          <EntitySet Name="Boeken" EntityType="OpleidingenModel.Boek" />
-          <EntitySet Name="BoekenCursussen" EntityType="OpleidingenModel.BoekCursus" />
-          <EntitySet Name="Cursussen" EntityType="OpleidingenModel.Cursus" />
-          <AssociationSet Name="FK__BoekenCur__BoekN__44FF419A" Association="OpleidingenModel.FK__BoekenCur__BoekN__44FF419A">
-            <End Role="Boeken2" EntitySet="Boeken" />
-            <End Role="BoekenCursussen2" EntitySet="BoekenCursussen" />
-          </AssociationSet>
-          <AssociationSet Name="FK__BoekenCur__Cursu__45F365D3" Association="OpleidingenModel.FK__BoekenCur__Cursu__45F365D3">
-            <End Role="Cursussen2" EntitySet="Cursussen" />
-            <End Role="BoekenCursussen2" EntitySet="BoekenCursussen" />
-          </AssociationSet>
           <EntitySet Name="Cursisten" EntityType="OpleidingenModel.Cursist" />
           <AssociationSet Name="FK__Cursisten__Mento__49C3F6B7" Association="OpleidingenModel.FK__Cursisten__Mento__49C3F6B7">
             <End Role="Cursisten" EntitySet="Cursisten" />
             <End Role="Cursisten1" EntitySet="Cursisten" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="Cursussen" EntityType="OpleidingenModel.Cursus" />
+          </EntityContainer>
         <EntityType Name="Voorraad">
           <Key>
             <PropertyRef Name="MagazijnNr" />
@@ -218,58 +206,6 @@
           <Property Name="RekNr" Type="Int32" Nullable="false" />
           <Property Name="Aangepast" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
-        <EntityType Name="Boek">
-          <Key>
-            <PropertyRef Name="BoekNr" />
-          </Key>
-          <Property Name="BoekNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ISBNNr" Type="String" Nullable="false" MaxLength="17" FixedLength="false" Unicode="true" />
-          <Property Name="Titel" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="BoekenCursussen" Relationship="OpleidingenModel.FK__BoekenCur__BoekN__44FF419A" FromRole="Boeken2" ToRole="BoekenCursussen2" />
-        </EntityType>
-        <EntityType Name="BoekCursus">
-          <Key>
-            <PropertyRef Name="BoekNr" />
-            <PropertyRef Name="CursusNr" />
-          </Key>
-          <Property Name="BoekNr" Type="Int32" Nullable="false" />
-          <Property Name="CursusNr" Type="Int32" Nullable="false" />
-          <Property Name="VolgNr" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Boek" Relationship="OpleidingenModel.FK__BoekenCur__BoekN__44FF419A" FromRole="BoekenCursussen2" ToRole="Boeken2" />
-          <NavigationProperty Name="Cursus" Relationship="OpleidingenModel.FK__BoekenCur__Cursu__45F365D3" FromRole="BoekenCursussen2" ToRole="Cursussen2" />
-        </EntityType>
-        <EntityType Name="Cursus">
-          <Key>
-            <PropertyRef Name="CursusNr" />
-          </Key>
-          <Property Name="CursusNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Naam" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="BoekenCursussen" Relationship="OpleidingenModel.FK__BoekenCur__Cursu__45F365D3" FromRole="Cursussen2" ToRole="BoekenCursussen2" />
-        </EntityType>
-        <Association Name="FK__BoekenCur__BoekN__44FF419A">
-          <End Type="OpleidingenModel.Boek" Role="Boeken2" Multiplicity="1" />
-          <End Type="OpleidingenModel.BoekCursus" Role="BoekenCursussen2" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Boeken2">
-              <PropertyRef Name="BoekNr" />
-            </Principal>
-            <Dependent Role="BoekenCursussen2">
-              <PropertyRef Name="BoekNr" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__BoekenCur__Cursu__45F365D3">
-          <End Type="OpleidingenModel.Cursus" Role="Cursussen2" Multiplicity="1" />
-          <End Type="OpleidingenModel.BoekCursus" Role="BoekenCursussen2" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Cursussen2">
-              <PropertyRef Name="CursusNr" />
-            </Principal>
-            <Dependent Role="BoekenCursussen2">
-              <PropertyRef Name="CursusNr" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Cursist">
           <Key>
             <PropertyRef Name="CursistNr" />
@@ -293,7 +229,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="Cursus" Abstract="true">
+          <Key>
+            <PropertyRef Name="CursusNr" />
+          </Key>
+          <Property Name="CursusNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naam" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="KlassikaleCursus" BaseType="OpleidingenModel.Cursus">
+          <Property Name="Van" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Tot" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="ZelfstudieCursus" BaseType="OpleidingenModel.Cursus">
+          <Property Name="Duurtijd" Type="Int32" Nullable="false" />
+        </EntityType>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -333,32 +283,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Boeken">
-            <EntityTypeMapping TypeName="OpleidingenModel.Boek">
-              <MappingFragment StoreEntitySet="Boeken2">
-                <ScalarProperty Name="Titel" ColumnName="Titel" />
-                <ScalarProperty Name="ISBNNr" ColumnName="ISBNNr" />
-                <ScalarProperty Name="BoekNr" ColumnName="BoekNr" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BoekenCursussen">
-            <EntityTypeMapping TypeName="OpleidingenModel.BoekCursus">
-              <MappingFragment StoreEntitySet="BoekenCursussen2">
-                <ScalarProperty Name="VolgNr" ColumnName="VolgNr" />
-                <ScalarProperty Name="CursusNr" ColumnName="CursusNr" />
-                <ScalarProperty Name="BoekNr" ColumnName="BoekNr" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Cursussen">
-            <EntityTypeMapping TypeName="OpleidingenModel.Cursus">
-              <MappingFragment StoreEntitySet="Cursussen2">
-                <ScalarProperty Name="Naam" ColumnName="Naam" />
-                <ScalarProperty Name="CursusNr" ColumnName="CursusNr" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Cursisten">
             <EntityTypeMapping TypeName="OpleidingenModel.Cursist">
               <MappingFragment StoreEntitySet="Cursisten">
@@ -366,6 +290,27 @@
                 <ScalarProperty Name="Familienaam" ColumnName="Familienaam" />
                 <ScalarProperty Name="Voornaam" ColumnName="Voornaam" />
                 <ScalarProperty Name="CursistNr" ColumnName="CursistNr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cursussen">
+            <EntityTypeMapping TypeName="IsTypeOf(OpleidingenModel.Cursus)">
+              <MappingFragment StoreEntitySet="Cursussen4">
+                <ScalarProperty Name="CursusNr" ColumnName="CursusNr" />
+                <ScalarProperty Name="Naam" ColumnName="Naam" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(OpleidingenModel.ZelfstudieCursus)">
+              <MappingFragment StoreEntitySet="ZelfstudieCursussen4">
+                <ScalarProperty Name="CursusNr" ColumnName="CursusNr" />
+                <ScalarProperty Name="Duurtijd" ColumnName="Duurtijd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(OpleidingenModel.KlassikaleCursus)">
+              <MappingFragment StoreEntitySet="KlassikaleCursussen4">
+                <ScalarProperty Name="CursusNr" ColumnName="CursusNr" />
+                <ScalarProperty Name="Van" ColumnName="Van" />
+                <ScalarProperty Name="Tot" ColumnName="Tot" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -55,12 +55,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Boek.cs">
-      <DependentUpon>Opleidingen.tt</DependentUpon>
-    </Compile>
-    <Compile Include="BoekCursus.cs">
-      <DependentUpon>Opleidingen.tt</DependentUpon>
-    </Compile>
     <Compile Include="Campus.cs">
       <DependentUpon>Opleidingen.tt</DependentUpon>
     </Compile>
@@ -74,6 +68,9 @@
       <DependentUpon>Opleidingen.tt</DependentUpon>
     </Compile>
     <Compile Include="DocentUitbreiding.cs" />
+    <Compile Include="KlassikaleCursus.cs">
+      <DependentUpon>Opleidingen.tt</DependentUpon>
+    </Compile>
     <Compile Include="Opleidingen.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -92,6 +89,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Voorraad.cs">
+      <DependentUpon>Opleidingen.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ZelfstudieCursus.cs">
       <DependentUpon>Opleidingen.tt</DependentUpon>
     </Compile>
   </ItemGroup>
