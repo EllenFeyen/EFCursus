@@ -12,106 +12,12 @@ namespace EFCursus
     {
         static void Main(string[] args)
         {
-            //TPC
             using (var entities = new OpleidingenEntities())
             {
-                var query = from cursus in entities.Cursussen
-                            orderby cursus.Naam
-                            select cursus;
-                foreach (var cursus in query)
+                foreach (var cursist in (from eenCursist in entities.Cursisten select eenCursist))
                 {
-                    Console.WriteLine(cursus.Naam);
+                    Console.WriteLine(cursist.Naam.InformeleBegroeting);
                 }
-            }
-
-            using (var entities = new OpleidingenEntities())
-            {
-                var query = from cursus in entities.Cursussen
-                            where cursus is KlassikaleCursus
-                            orderby cursus.Naam
-                            select cursus;
-                foreach (var cursus in query)
-                {
-                    Console.WriteLine(cursus.Naam);
-                }
-            }
-
-            using (var entities = new OpleidingenEntities())
-            {
-                entities.Cursussen.Add(new ZelfstudieCursus
-                {
-                    Naam = "Spaanse correspondentie",
-                    Duurtijd = 6
-                });
-                entities.SaveChanges();
-            }
-
-            //TPH
-            using (var entities = new OpleidingenEntities())
-            {
-                var query = from cursus in entities.Cursussen
-                            orderby cursus.Naam
-                            select cursus;
-                foreach (var cursus in query)
-                {
-                    Console.WriteLine("{0}: {1}", cursus.Naam, cursus.GetType().Name);
-                }
-            }
-
-            using (var entities = new OpleidingenEntities())
-            {
-                var query = from cursus in entities.Cursussen
-                            where cursus is ZelfstudieCursus
-                            orderby cursus.Naam
-                            select cursus;
-                foreach (var cursus in query)
-                {
-                    Console.WriteLine(cursus.Naam);
-                }
-            }
-
-            using(var entities = new OpleidingenEntities())
-            {
-                entities.Cursussen.Add(new ZelfstudieCursus
-                {
-                    Naam = "Duitse correspondentie",
-                    Duurtijd = 6
-                });
-                entities.SaveChanges();
-            }
-
-            //TPT
-            using (var entities = new OpleidingenEntities())
-            {
-                var query = from cursus in entities.Cursussen
-                            orderby cursus.Naam
-                            select cursus;
-                foreach (var cursus in query)
-                {
-                    Console.WriteLine("{0}: {1}", cursus.Naam, cursus.GetType().Name);
-                }
-            }
-
-            using (var entities = new OpleidingenEntities())
-            {
-                var query = from cursus in entities.Cursussen
-                            where !(cursus is ZelfstudieCursus)
-                            orderby cursus.Naam
-                            select cursus;
-                foreach (var cursus in query)
-                {
-                    Console.WriteLine(cursus.Naam);
-                }
-            }
-
-            using (var entities = new OpleidingenEntities())
-            {
-                entities.Cursussen.Add(new ZelfstudieCursus
-                {
-                    Naam = "Italiaanse correspondentie",
-                    Duurtijd = 6
-                });
-                entities.SaveChanges();
             }
 
             Console.WriteLine("Druk enter om af te sluiten");

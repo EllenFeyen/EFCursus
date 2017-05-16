@@ -71,6 +71,10 @@
     <Compile Include="KlassikaleCursus.cs">
       <DependentUpon>Opleidingen.tt</DependentUpon>
     </Compile>
+    <Compile Include="Naam.cs">
+      <DependentUpon>Opleidingen.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NaamUitbreiding.cs" />
     <Compile Include="Opleidingen.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

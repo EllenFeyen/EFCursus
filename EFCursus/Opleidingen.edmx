@@ -162,11 +162,10 @@
             <PropertyRef Name="DocentNr" />
           </Key>
           <Property Name="DocentNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Voornaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Familienaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Wedde" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="CampusNr" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Campus" Relationship="Self.FK__Docenten__Campus__25869641" FromRole="Docenten" ToRole="Campussen" />
+          <Property Name="Naam" Type="OpleidingenModel.Naam" Nullable="false" />
         </EntityType>
         <Association Name="FK__Docenten__Campus__25869641">
           <End Role="Campussen" Type="OpleidingenModel.Campus" Multiplicity="1" />
@@ -211,11 +210,10 @@
             <PropertyRef Name="CursistNr" />
           </Key>
           <Property Name="CursistNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Voornaam" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Familienaam" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="MentorNr" Type="Int32" />
           <NavigationProperty Name="Beschermelingen" Relationship="OpleidingenModel.FK__Cursisten__Mento__49C3F6B7" FromRole="Cursisten" ToRole="Cursisten1" />
           <NavigationProperty Name="Mentor" Relationship="OpleidingenModel.FK__Cursisten__Mento__49C3F6B7" FromRole="Cursisten1" ToRole="Cursisten" />
+          <Property Name="Naam" Type="OpleidingenModel.Naam" Nullable="false" />
         </EntityType>
         <Association Name="FK__Cursisten__Mento__49C3F6B7">
           <End Type="OpleidingenModel.Cursist" Role="Cursisten" Multiplicity="0..1" />
@@ -243,6 +241,10 @@
         <EntityType Name="ZelfstudieCursus" BaseType="OpleidingenModel.Cursus">
           <Property Name="Duurtijd" Type="Int32" Nullable="false" />
         </EntityType>
+        <ComplexType Name="Naam">
+          <Property Type="String" Name="Voornaam" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Familienaam" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -265,10 +267,12 @@
             <EntityTypeMapping TypeName="OpleidingenModel.Docent">
               <MappingFragment StoreEntitySet="Docenten">
                 <ScalarProperty Name="DocentNr" ColumnName="DocentNr" />
-                <ScalarProperty Name="Voornaam" ColumnName="Voornaam" />
-                <ScalarProperty Name="Familienaam" ColumnName="Familienaam" />
                 <ScalarProperty Name="Wedde" ColumnName="Wedde" />
                 <ScalarProperty Name="CampusNr" ColumnName="CampusNr" />
+                <ComplexProperty Name="Naam">
+                  <ScalarProperty Name="Familienaam" ColumnName="Familienaam" />
+                  <ScalarProperty Name="Voornaam" ColumnName="Voornaam" />
+                </ComplexProperty>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -287,9 +291,11 @@
             <EntityTypeMapping TypeName="OpleidingenModel.Cursist">
               <MappingFragment StoreEntitySet="Cursisten">
                 <ScalarProperty Name="MentorNr" ColumnName="MentorNr" />
-                <ScalarProperty Name="Familienaam" ColumnName="Familienaam" />
-                <ScalarProperty Name="Voornaam" ColumnName="Voornaam" />
                 <ScalarProperty Name="CursistNr" ColumnName="CursistNr" />
+                <ComplexProperty Name="Naam">
+                  <ScalarProperty Name="Familienaam" ColumnName="Familienaam" />
+                  <ScalarProperty Name="Voornaam" ColumnName="Voornaam" />
+                </ComplexProperty>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
