@@ -14,24 +14,41 @@ namespace EFCursus
         {
             using (var entities = new OpleidingenEntities())
             {
-                var query = from bestBetaaldeDocentPerCampus
-                            in entities.BestBetaaldeDocentenPerCampus
-                            orderby bestBetaaldeDocentPerCampus.CampusNr, 
-                            bestBetaaldeDocentPerCampus.Voornaam, 
-                            bestBetaaldeDocentPerCampus.Familienaam
-                            select bestBetaaldeDocentPerCampus;
-                var vorigCampusNr = 0;
-                foreach (var bestbetaaldeDocentPerCampus in query)
+                foreach (var campus in entities.CampussenVanTotPostCode("8000","8999"))
                 {
-                    if (bestbetaaldeDocentPerCampus.CampusNr != vorigCampusNr)
-                    {
-                        Console.WriteLine("{0} Grootste wedde: {1}",
-                            bestbetaaldeDocentPerCampus.Naam, bestbetaaldeDocentPerCampus.GrootsteWedde);
-                        vorigCampusNr = bestbetaaldeDocentPerCampus.CampusNr;
-                    }
-                    Console.WriteLine("\t{0} {1}", bestbetaaldeDocentPerCampus.Voornaam,
-                        bestbetaaldeDocentPerCampus.Familienaam);
+                    Console.WriteLine("{0}: {1}", campus.Naam, campus.PostCode);
                 }
+            }
+
+            using (var entities = new OpleidingenEntities())
+            {
+                foreach (var voornaamAantal in entities.AantalDocentenPerVoornaam())
+                {
+                    Console.WriteLine("{0} {1}", voornaamAantal.Voornaam, voornaamAantal.Aantal);
+                }
+            }
+
+            Console.Write("Opslagpercentage:");
+            decimal percentage;
+            if (decimal.TryParse(Console.ReadLine(), out percentage))
+            {
+                using (var entities = new OpleidingenEntities())
+                {
+                    var aantalDocentenAangepast = entities.WeddeVerhoging(percentage);
+                    Console.WriteLine("{0} docenten aangepast", aantalDocentenAangepast);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Tik een getal");
+            }
+
+            Console.Write("Familienaam:");
+            var familienaam = Console.ReadLine();
+            using (var entities = new OpleidingenEntities())
+            {
+                var aantalDocenten = entities.AantalDocentenMetFamilienaam(familienaam);
+                Console.WriteLine("{0} docent(en)", aantalDocenten.First());
             }
 
             Console.WriteLine("Druk enter om af te sluiten");

@@ -55,10 +55,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AantalDocentenPerVoornaam_Result.cs">
+      <DependentUpon>Opleidingen.tt</DependentUpon>
+    </Compile>
     <Compile Include="BestBetaaldeDocentPerCampus.cs">
       <DependentUpon>Opleidingen.tt</DependentUpon>
     </Compile>
     <Compile Include="Campus.cs">
+      <DependentUpon>Opleidingen.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CampussenVanTotPostCode_Result.cs">
       <DependentUpon>Opleidingen.tt</DependentUpon>
     </Compile>
     <Compile Include="Cursist.cs">

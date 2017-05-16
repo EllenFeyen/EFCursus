@@ -4,19 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ce41565799584598bdf8ec519a304042" Name="Diagram1" DisplayType="true">
-        <EntityTypeShape EntityType="OpleidingenModel.Campus" Width="1.625" PointX="3.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpleidingenModel.Docent" Width="1.75" PointX="6.125" PointY="1" IsExpanded="true" />
+      <Diagram DiagramId="ce41565799584598bdf8ec519a304042" Name="Diagram1" DisplayType="true" ZoomLevel="100">
+        <EntityTypeShape EntityType="OpleidingenModel.Campus" Width="1.625" PointX="3.125" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpleidingenModel.Docent" Width="1.75" PointX="0.5" PointY="0.625" IsExpanded="true" />
         <AssociationConnector Association="OpleidingenModel.FK__Docenten__Campus__25869641" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="OpleidingenModel.Voorraad" Width="1.75" PointX="0.75" PointY="3.75" />
-        <EntityTypeShape EntityType="OpleidingenModel.Cursist" Width="1.75" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="OpleidingenModel.Voorraad" Width="1.75" PointX="0.75" PointY="4.375" />
+        <EntityTypeShape EntityType="OpleidingenModel.Cursist" Width="1.75" PointX="5.5" PointY="0.625" />
         <AssociationConnector Association="OpleidingenModel.FK__Cursisten__Mento__49C3F6B7" />
-        <EntityTypeShape EntityType="OpleidingenModel.Cursus" Width="1.5" PointX="2.375" PointY="7.375" />
-        <EntityTypeShape EntityType="OpleidingenModel.KlassikaleCursus" Width="1.75" PointX="1" PointY="9.5" />
-        <EntityTypeShape EntityType="OpleidingenModel.ZelfstudieCursus" Width="1.75" PointX="3.5" PointY="9.5" />
+        <EntityTypeShape EntityType="OpleidingenModel.Cursus" Width="1.5" PointX="8.5" PointY="2.375" />
+        <EntityTypeShape EntityType="OpleidingenModel.KlassikaleCursus" Width="1.75" PointX="7.125" PointY="4.5" />
+        <EntityTypeShape EntityType="OpleidingenModel.ZelfstudieCursus" Width="1.75" PointX="9.625" PointY="4.5" />
         <InheritanceConnector EntityType="OpleidingenModel.ZelfstudieCursus" />
         <InheritanceConnector EntityType="OpleidingenModel.KlassikaleCursus" />
-        <EntityTypeShape EntityType="OpleidingenModel.BestBetaaldeDocentPerCampus" Width="2.375" PointX="3.75" PointY="4.75" />
+        <EntityTypeShape EntityType="OpleidingenModel.BestBetaaldeDocentPerCampus" Width="2.375" PointX="3.375" PointY="4.375" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
