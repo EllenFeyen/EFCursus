@@ -69,6 +69,23 @@
           <Property Name="CursusNr" Type="int" Nullable="false" />
           <Property Name="Duurtijd" Type="int" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Opleidingen.dbo.BestBetaaldeDocentenPerCampus' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="BestBetaaldeDocentenPerCampus">
+          <Key>
+            <PropertyRef Name="CampusNr" />
+            <PropertyRef Name="Naam" />
+            <PropertyRef Name="DocentNr" />
+            <PropertyRef Name="Voornaam" />
+            <PropertyRef Name="Familienaam" />
+          </Key>
+          <Property Name="CampusNr" Type="int" Nullable="false" />
+          <Property Name="Naam" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="GrootsteWedde" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="DocentNr" Type="int" Nullable="false" />
+          <Property Name="Voornaam" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Familienaam" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <Association Name="FK__Cursisten__Mento__49C3F6B7">
           <End Role="Cursisten" Type="Self.Cursisten" Multiplicity="0..1" />
           <End Role="Cursisten1" Type="Self.Cursisten" Multiplicity="*" />
@@ -125,6 +142,16 @@
           <EntitySet Name="KlassikaleCursussen4" EntityType="Self.KlassikaleCursussen4" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Voorraden" EntityType="Self.Voorraden" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ZelfstudieCursussen4" EntityType="Self.ZelfstudieCursussen4" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BestBetaaldeDocentenPerCampus" EntityType="Self.BestBetaaldeDocentenPerCampus" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [BestBetaaldeDocentenPerCampus].[CampusNr] AS [CampusNr], 
+    [BestBetaaldeDocentenPerCampus].[Naam] AS [Naam], 
+    [BestBetaaldeDocentenPerCampus].[GrootsteWedde] AS [GrootsteWedde], 
+    [BestBetaaldeDocentenPerCampus].[DocentNr] AS [DocentNr], 
+    [BestBetaaldeDocentenPerCampus].[Voornaam] AS [Voornaam], 
+    [BestBetaaldeDocentenPerCampus].[Familienaam] AS [Familienaam]
+    FROM [dbo].[BestBetaaldeDocentenPerCampus] AS [BestBetaaldeDocentenPerCampus]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK__Cursisten__Mento__49C3F6B7" Association="Self.FK__Cursisten__Mento__49C3F6B7">
             <End Role="Cursisten" EntitySet="Cursisten" />
             <End Role="Cursisten1" EntitySet="Cursisten" />
@@ -195,6 +222,7 @@
             <End Role="Cursisten1" EntitySet="Cursisten" />
           </AssociationSet>
           <EntitySet Name="Cursussen" EntityType="OpleidingenModel.Cursus" />
+          <EntitySet Name="BestBetaaldeDocentenPerCampus" EntityType="OpleidingenModel.BestBetaaldeDocentPerCampus" />
           </EntityContainer>
         <EntityType Name="Voorraad">
           <Key>
@@ -251,6 +279,21 @@
           <Member Name="Man" Value="1" />
           <Member Name="Vrouw" Value="2" />
         </EnumType>
+        <EntityType Name="BestBetaaldeDocentPerCampus">
+          <Key>
+            <PropertyRef Name="CampusNr" />
+            <PropertyRef Name="Naam" />
+            <PropertyRef Name="DocentNr" />
+            <PropertyRef Name="Voornaam" />
+            <PropertyRef Name="Familienaam" />
+          </Key>
+          <Property Name="CampusNr" Type="Int32" Nullable="false" />
+          <Property Name="Naam" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GrootsteWedde" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="DocentNr" Type="Int32" Nullable="false" />
+          <Property Name="Voornaam" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Familienaam" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -324,6 +367,18 @@
                 <ScalarProperty Name="CursusNr" ColumnName="CursusNr" />
                 <ScalarProperty Name="Van" ColumnName="Van" />
                 <ScalarProperty Name="Tot" ColumnName="Tot" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BestBetaaldeDocentenPerCampus">
+            <EntityTypeMapping TypeName="OpleidingenModel.BestBetaaldeDocentPerCampus">
+              <MappingFragment StoreEntitySet="BestBetaaldeDocentenPerCampus">
+                <ScalarProperty Name="Familienaam" ColumnName="Familienaam" />
+                <ScalarProperty Name="Voornaam" ColumnName="Voornaam" />
+                <ScalarProperty Name="DocentNr" ColumnName="DocentNr" />
+                <ScalarProperty Name="GrootsteWedde" ColumnName="GrootsteWedde" />
+                <ScalarProperty Name="Naam" ColumnName="Naam" />
+                <ScalarProperty Name="CampusNr" ColumnName="CampusNr" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -14,22 +14,24 @@ namespace EFCursus
         {
             using (var entities = new OpleidingenEntities())
             {
-                foreach (var docent in entities.Docenten)
+                var query = from bestBetaaldeDocentPerCampus
+                            in entities.BestBetaaldeDocentenPerCampus
+                            orderby bestBetaaldeDocentPerCampus.CampusNr, 
+                            bestBetaaldeDocentPerCampus.Voornaam, 
+                            bestBetaaldeDocentPerCampus.Familienaam
+                            select bestBetaaldeDocentPerCampus;
+                var vorigCampusNr = 0;
+                foreach (var bestbetaaldeDocentPerCampus in query)
                 {
-                    Console.WriteLine("{0}:{1}", docent.Naam, docent.Geslacht);
+                    if (bestbetaaldeDocentPerCampus.CampusNr != vorigCampusNr)
+                    {
+                        Console.WriteLine("{0} Grootste wedde: {1}",
+                            bestbetaaldeDocentPerCampus.Naam, bestbetaaldeDocentPerCampus.GrootsteWedde);
+                        vorigCampusNr = bestbetaaldeDocentPerCampus.CampusNr;
+                    }
+                    Console.WriteLine("\t{0} {1}", bestbetaaldeDocentPerCampus.Voornaam,
+                        bestbetaaldeDocentPerCampus.Familienaam);
                 }
-            }
-
-            using (var entities = new OpleidingenEntities())
-            {
-                entities.Docenten.Add(new Docent
-                {
-                    Naam = new Naam { Voornaam = "Brigitta", Familienaam = "Roos" },
-                    Wedde = 2000,
-                    Geslacht = Geslacht.Vrouw,
-                    CampusNr = 1
-                });
-                entities.SaveChanges();
             }
 
             Console.WriteLine("Druk enter om af te sluiten");
