@@ -68,6 +68,9 @@
       <DependentUpon>Opleidingen.tt</DependentUpon>
     </Compile>
     <Compile Include="DocentUitbreiding.cs" />
+    <Compile Include="Geslacht.cs">
+      <DependentUpon>Opleidingen.tt</DependentUpon>
+    </Compile>
     <Compile Include="KlassikaleCursus.cs">
       <DependentUpon>Opleidingen.tt</DependentUpon>
     </Compile>

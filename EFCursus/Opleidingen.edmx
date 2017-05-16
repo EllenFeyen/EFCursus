@@ -41,6 +41,7 @@
           <Property Name="Familienaam" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Wedde" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="CampusNr" Type="int" Nullable="false" />
+          <Property Name="Geslacht" Type="int" />
         </EntityType>
         <EntityType Name="KlassikaleCursussen4">
           <Key>
@@ -166,6 +167,7 @@
           <Property Name="CampusNr" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Campus" Relationship="Self.FK__Docenten__Campus__25869641" FromRole="Docenten" ToRole="Campussen" />
           <Property Name="Naam" Type="OpleidingenModel.Naam" Nullable="false" />
+          <Property Name="Geslacht" Type="OpleidingenModel.Geslacht" />
         </EntityType>
         <Association Name="FK__Docenten__Campus__25869641">
           <End Role="Campussen" Type="OpleidingenModel.Campus" Multiplicity="1" />
@@ -245,6 +247,10 @@
           <Property Type="String" Name="Voornaam" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Familienaam" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </ComplexType>
+        <EnumType Name="Geslacht">
+          <Member Name="Man" Value="1" />
+          <Member Name="Vrouw" Value="2" />
+        </EnumType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -266,6 +272,7 @@
           <EntitySetMapping Name="Docenten">
             <EntityTypeMapping TypeName="OpleidingenModel.Docent">
               <MappingFragment StoreEntitySet="Docenten">
+                <ScalarProperty Name="Geslacht" ColumnName="Geslacht" />
                 <ScalarProperty Name="DocentNr" ColumnName="DocentNr" />
                 <ScalarProperty Name="Wedde" ColumnName="Wedde" />
                 <ScalarProperty Name="CampusNr" ColumnName="CampusNr" />

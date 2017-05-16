@@ -23,6 +23,7 @@ namespace EFCursus
         public int DocentNr { get; set; }
         public decimal Wedde { get; set; }
         public int CampusNr { get; set; }
+        public Nullable<Geslacht> Geslacht { get; set; }
     
         public Naam Naam { get; set; }
     
